@@ -1,0 +1,87 @@
+body {
+    background: #5da17d;
+    color: #7d5da1;
+    padding: 0;
+    margin: 0;
+    padding-top: 5vw;
+
+}
+
+.playing-field {
+    border: 2px solid #a17d5d;
+    width: 40vw;
+    height: 40vw;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4%;
+}
+
+.tag {
+    position: relative;
+    width: 22%;
+    height: 22%;
+    background: #7d5da1;
+    color: #5da17d;
+    text-align: center;
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.empty {
+    position: relative;
+    width: 22%;
+    height: 22%;
+}
+
+.tag.animate-down,
+.tag.animate-up,
+.tag.animate-left,
+.tag.animate-right {
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+.tag.animate-up {
+    transform: translateY(-118%);
+}
+
+.tag.animate-down {
+    transform: translateY(118%);
+}
+
+.tag.animate-left {
+    transform: translateX(-118%);
+}
+
+.tag.animate-right {
+    transform: translateX(118%);
+}
+
+.buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    cursor: pointer;
+    background: #a17d5d;
+
+}
+
+.sound-ico {
+    background: url('./assets/icon/sound.svg');
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    cursor: pointer;
+    opacity: 0.3;
+}
+
+.sound-ico.active {
+    opacity: 1;
+}
