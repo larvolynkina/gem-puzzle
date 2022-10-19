@@ -4,35 +4,43 @@ body {
     padding: 0;
     margin: 0;
     padding-top: 5vw;
+}
 
+p {
+    padding: 0;
+    margin: 0;
 }
 
 .playing-field {
-    border: 2px solid #a17d5d;
+    background: #a17d5d;
+    border: 10px solid #72563d;
     width: 40vw;
     height: 40vw;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 4%;
+    margin-top: 30px;
+    border-radius: 5px;
 }
 
 .tag {
     position: relative;
-    width: 22%;
-    height: 22%;
+    width: 25%;
+    height: 25%;
     background: #7d5da1;
-    color: #5da17d;
+    color: #a6b1ab;
     text-align: center;
     font-size: 2rem;
     cursor: pointer;
     border-radius: 15px;
+    box-sizing: border-box;
+    border: 1px solid;
 }
 
 .empty {
     position: relative;
-    width: 22%;
-    height: 22%;
+    width: 25%;
+    height: 25%;
 }
 
 .tag.animate-down,
@@ -45,19 +53,19 @@ body {
 }
 
 .tag.animate-up {
-    transform: translateY(-118%);
+    transform: translateY(-100%);
 }
 
 .tag.animate-down {
-    transform: translateY(118%);
+    transform: translateY(100%);
 }
 
 .tag.animate-left {
-    transform: translateX(-118%);
+    transform: translateX(-100%);
 }
 
 .tag.animate-right {
-    transform: translateX(118%);
+    transform: translateX(100%);
 }
 
 .buttons-wrapper {
@@ -65,12 +73,16 @@ body {
     justify-content: center;
     gap: 10px;
     margin-bottom: 10px;
+    align-items: center;
 }
 
 .btn {
     cursor: pointer;
-    background: #a17d5d;
-
+    background: #7d5da1;
+    border: none;
+    font-size: 18px;
+    padding: 6px;
+    color: #7ab1aa;
 }
 
 .sound-ico {
@@ -84,4 +96,37 @@ body {
 
 .sound-ico.active {
     opacity: 1;
+}
+
+.info-wrapper {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+}
+
+.info-element {
+    font-size: 24px;
+}
+
+.finish-popup {
+    position: fixed;
+    /* width: 30vw;
+    height: 30vw; */
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #7d5da1;
+    color: #fff;
+    font-size: 24px;
+    border: 3px solid;
+    border-radius: 20px;
+}
+
+.finish-popup p {
+    margin: auto;
+    padding: 10%;
+    text-align: center;
 }
