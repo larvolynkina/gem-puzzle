@@ -1,3 +1,8 @@
+import './index.html';
+import './style.css';
+import winnerAudio from './assets/sound/winner.mp3';
+import clickAudio from './assets/sound/move.mp3';
+
 const overlay = document.createElement('div');
 overlay.classList.add('overlay');
 document.body.append(overlay);
@@ -440,7 +445,7 @@ function isWinner() {
   const { winMatrix } = settings[currentSize];
   if (winMatrix.toString() === matrix.toString()) {
     if (soundIco.classList.contains('active')) {
-      const winnerSound = new Audio('./assets/sound/winner.mp3');
+      const winnerSound = new Audio(winnerAudio);
       winnerSound.autoplay = true;
     }
     const element = document.createElement('div');
@@ -500,7 +505,7 @@ playingField.addEventListener('transitionend', () => {
 // move sound
 
 function soundOn() {
-  const sound = new Audio('./assets/sound/move.mp3');
+  const sound = new Audio(clickAudio);
   if (soundIco.classList.contains('active')) {
     sound.autoplay = true;
   } else {

@@ -119,7 +119,7 @@ p {
 }
 
 .sound-ico {
-    background: url('./assets/icon/sound.svg');
+    background: url('/src/assets/icon/sound.svg');
     width: 25px;
     height: 25px;
     background-size: cover;
