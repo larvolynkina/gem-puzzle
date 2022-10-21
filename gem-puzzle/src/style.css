@@ -1,9 +1,13 @@
+html {
+    font-size: 10px;
+}
+
 body {
     background: #5da17d;
     color: #7d5da1;
     padding: 0;
     margin: 0;
-    padding-top: 5vw;
+
 }
 
 p {
@@ -14,12 +18,11 @@ p {
 .playing-field {
     background: #a17d5d;
     border: 10px solid #72563d;
-    width: 80vw;
-    height: 80vw;
-    margin: 0 auto;
+    width: 70vmin;
+    height: 70vmin;
+    margin: 2rem auto;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 30px;
     border-radius: 5px;
     max-width: 450px;
     max-height: 450px;
@@ -32,7 +35,7 @@ p {
     background: #7d5da1;
     color: #a6b1ab;
     text-align: center;
-    font-size: 2rem;
+    font-size: 3.5rem;
     cursor: pointer;
     border-radius: 15px;
     box-sizing: border-box;
@@ -98,16 +101,17 @@ p {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-bottom: 10px;
     align-items: center;
+    padding: 2rem;
+    flex-wrap: wrap;
 }
 
 .btn {
     cursor: pointer;
     background: #7d5da1;
     border: none;
-    font-size: 18px;
-    padding: 6px;
+    font-size: 2.6rem;
+    padding: 0.6rem 1.2rem;
     color: #7ab1aa;
 }
 
@@ -125,15 +129,15 @@ p {
 }
 
 .info-wrapper {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: center;
     gap: 35px;
+    align-items: center;
 }
 
 .info-element {
-    font-size: 24px;
+    font-size: 2.6rem;
 }
 
 .finish-popup {
@@ -146,9 +150,10 @@ p {
     transform: translate(-50%, -50%);
     background: #7d5da1;
     color: #fff;
-    font-size: 24px;
+    font-size: 2.6rem;
     border: 3px solid;
     border-radius: 20px;
+    z-index: 10;
 }
 
 .finish-popup p {
@@ -161,8 +166,10 @@ p {
     display: flex;
     justify-content: center;
     gap: 10px;
-    font-size: 24px;
+    font-size: 2.6rem;
     color: #7d5da1;
+    flex-wrap: wrap;
+    padding: 1rem 2rem;
 }
 
 .links-wrapper a {
@@ -175,4 +182,74 @@ p {
 
 .links-wrapper a.active {
     text-decoration: underline;
+}
+
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    /* width: 30vw;
+    height: 30vw; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.results {
+    display: none;
+    border-collapse: collapse;
+    font-size: 2.6rem;
+    text-align: center;
+    background: #fff;
+}
+
+.results.active {
+    display: block;
+}
+
+th {
+    border: 1px solid grey;
+    padding: 10px;
+}
+
+td {
+    border: 1px solid grey;
+    padding: 5px;
+}
+
+caption {
+    padding: 5px;
+}
+
+.overlay {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 5;
+    background: black;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.overlay.active {
+    display: block;
+}
+
+@media only screen and (max-width: 767px) {
+    html {
+        font-size: 9px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    html {
+        font-size: 7px;
+    }
+
+    .sound-ico {
+        width: 20px;
+        height: 20px;
+    }
 }

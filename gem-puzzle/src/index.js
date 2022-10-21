@@ -1,3 +1,7 @@
+const overlay = document.createElement('div');
+overlay.classList.add('overlay');
+document.body.append(overlay);
+
 const buttonsWrapper = document.createElement('div');
 document.body.append(buttonsWrapper);
 buttonsWrapper.classList.add('buttons-wrapper');
@@ -43,7 +47,7 @@ const buttons = [
     class: 'restart',
   },
   {
-    text: 'Stop',
+    text: 'Pause',
     class: 'stop',
   },
   {
@@ -72,9 +76,10 @@ const stopBTN = document.querySelector('.stop');
 const restartBTN = document.querySelector('.restart');
 const saveBTN = document.querySelector('.save');
 const loadBTN = document.querySelector('.load');
+const resultsBTN = document.querySelector('.result');
 
 const soundIco = document.createElement('div');
-buttonsWrapper.append(soundIco);
+infoWrapper.append(soundIco);
 soundIco.classList.add('sound-ico');
 
 const linksWrapper = document.createElement('div');
@@ -127,6 +132,7 @@ const allSizeLinks = document.querySelectorAll('.size-link');
 const settings = {
   nine: {
     digits: 9,
+    size: '3x3',
     width: '33.3',
     height: '33.3',
     winMatrix: [
@@ -137,6 +143,7 @@ const settings = {
   },
   sixteen: {
     digits: 16,
+    size: '4x4',
     width: '25',
     height: '25',
     winMatrix: [
@@ -148,6 +155,7 @@ const settings = {
   },
   twentyfive: {
     digits: 25,
+    size: '5x5',
     width: '20',
     height: '20',
     winMatrix: [
@@ -160,6 +168,7 @@ const settings = {
   },
   thirtysix: {
     digits: 36,
+    size: '6x6',
     width: '16.6',
     height: '16.6',
     winMatrix: [
@@ -173,6 +182,7 @@ const settings = {
   },
   fortynine: {
     digits: 49,
+    size: '7x7',
     width: '14.28',
     height: '14.28',
     winMatrix: [
@@ -187,6 +197,7 @@ const settings = {
   },
   sixtyfour: {
     digits: 64,
+    size: '8x8',
     width: '12.5',
     height: '12.5',
     winMatrix: [
@@ -201,6 +212,29 @@ const settings = {
     ],
   },
 };
+
+// const resultsObject = [
+//   {
+//     size: '3x3',
+//     moves: 44,
+//     time: '01:12',
+//   },
+//   {
+//     size: '3x3',
+//     moves: 140,
+//     time: '02:12',
+//   },
+//   {
+//     size: '4x4',
+//     moves: 17,
+//     time: '03:12',
+//   },
+// ];
+
+function sortResults(arr) {
+  const result = arr.sort((a, b) => a.moves - b.moves);
+  return result;
+}
 
 let currentSize;
 
@@ -401,6 +435,8 @@ function moveCurrentTag(tag) {
   isMouseEvent = false;
 }
 
+let resultsObject = [];
+
 function isWinner() {
   const { winMatrix } = settings[currentSize];
   if (winMatrix.toString() === matrix.toString()) {
@@ -414,7 +450,29 @@ function isWinner() {
     const paragraph = document.createElement('p');
     element.append(paragraph);
     paragraph.innerText = `Hooray! You solved the puzzle in ${timeSpan.textContent} and ${movesSpan.textContent} moves!`;
+    overlay.classList.add('active');
+
     stopTimer();
+
+    const results = {
+      size: settings[currentSize].size,
+      moves: movesCount,
+      time: timeSpan.textContent,
+    };
+
+    if (resultsObject.length < 10) {
+      resultsObject.push(results);
+    } else {
+      resultsObject.pop();
+      resultsObject.push(results);
+    }
+
+    resultsObject = sortResults(resultsObject);
+    localStorage.setItem('array', JSON.stringify(resultsObject));
+    resultsObject = JSON.parse(localStorage.getItem('array'));
+
+    removeRowsFromTable();
+    addRowWithResult();
   }
 }
 
@@ -423,7 +481,8 @@ function moveTagAfterClick(event) {
   if (tag.classList.contains('tag')) {
     moveCurrentTag(tag);
     soundOn();
-    isWinner();
+    const timeout = setTimeout(isWinner, 300);
+    // isWinner();
   }
 }
 
@@ -485,7 +544,20 @@ function stopTimer() {
   clearInterval(timer);
 }
 
-stopBTN.addEventListener('click', stopTimer);
+stopBTN.addEventListener('click', () => {
+  if (stopBTN.textContent === 'Pause') {
+    stopBTN.textContent = 'Continue';
+    stopTimer();
+    playingField.removeEventListener('click', moveTagAfterClick);
+    playingField.removeEventListener('mousedown', moveTagWithMouse);
+  } else {
+    startTimer();
+    stopBTN.textContent = 'Pause';
+    playingField.addEventListener('click', moveTagAfterClick);
+    playingField.addEventListener('mousedown', moveTagWithMouse);
+  }
+});
+
 startTimer();
 
 // перерисовка на смену размера поля
@@ -603,4 +675,81 @@ loadBTN.addEventListener('click', () => {
       item.classList.add('active');
     }
   });
+});
+
+if (localStorage.getItem('array')) {
+  resultsObject = JSON.parse(localStorage.getItem('array'));
+}
+
+let sortedResults = sortResults(resultsObject);
+
+const resultsHeaders = ['Size', 'Moves', 'Time'];
+
+const tableWrapper = document.createElement('div');
+tableWrapper.classList.add('table-wrapper');
+const table = document.createElement('table');
+table.classList.add('results');
+const caption = document.createElement('caption');
+caption.textContent = 'Top-10 results';
+table.append(caption);
+const headersRow = document.createElement('tr');
+table.append(headersRow);
+
+resultsHeaders.forEach((item, index, array) => {
+  const element = document.createElement('th');
+  element.textContent = array[index];
+  headersRow.append(element);
+});
+
+function removeRowsFromTable() {
+  const allResultsRows = document.querySelectorAll('tr');
+  allResultsRows.forEach((item) => {
+    if (item.classList.contains('row')) {
+      table.removeChild(item);
+    }
+  });
+}
+
+function addRowWithResult() {
+  if (localStorage.getItem('array')) {
+    resultsObject = JSON.parse(localStorage.getItem('array'));
+  }
+  sortedResults = sortResults(resultsObject);
+
+  sortedResults.forEach((item) => {
+    const row = document.createElement('tr');
+    row.classList.add('row');
+    const size = document.createElement('td');
+    size.textContent = item.size;
+    row.append(size);
+    const moves = document.createElement('td');
+    moves.textContent = item.moves;
+    row.append(moves);
+    const time = document.createElement('td');
+    time.textContent = item.time;
+    row.append(time);
+    table.append(row);
+  });
+}
+
+addRowWithResult();
+
+tableWrapper.append(table);
+document.body.append(tableWrapper);
+
+resultsBTN.addEventListener('click', () => {
+  table.classList.add('active');
+  overlay.classList.add('active');
+  removeRowsFromTable();
+  addRowWithResult();
+});
+
+overlay.addEventListener('click', () => {
+  overlay.classList.remove('active');
+  if (document.querySelector('.finish-popup')) {
+    document.querySelector('.finish-popup').remove();
+    restartTimeAndMoveCounts();
+    drawPlayingField();
+  }
+  table.classList.remove('active');
 });
