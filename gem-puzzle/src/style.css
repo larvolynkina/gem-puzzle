@@ -29,6 +29,9 @@ p {
 }
 
 .tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 25%;
     height: 25%;
@@ -237,13 +240,13 @@ caption {
     display: block;
 }
 
-@media only screen and (max-width: 767px) {
+@media screen and (max-width: 767px) {
     html {
         font-size: 9px;
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
     html {
         font-size: 7px;
     }

@@ -368,6 +368,13 @@ function moveCurrentTag(tag) {
     }
   }
 
+  function necessaryCommonActions() {
+    digits = fromMatrixToArray(matrix);
+    movesCount += 1;
+    movesSpan.innerText = movesCount;
+    soundOn();
+  }
+
   if (matrix[indexI - 1] && matrix[indexI - 1][indexJ] === 0) {
     tags.forEach((tag) => {
       if (tag.innerText === matrix[indexI][indexJ].toString()) {
@@ -378,9 +385,7 @@ function moveCurrentTag(tag) {
         }
         matrix[indexI][indexJ] = 0;
         matrix[indexI - 1][indexJ] = +tag.innerText;
-        digits = fromMatrixToArray(matrix);
-        movesCount += 1;
-        movesSpan.innerText = movesCount;
+        necessaryCommonActions();
       }
     });
   }
@@ -394,9 +399,7 @@ function moveCurrentTag(tag) {
         }
         matrix[indexI][indexJ] = 0;
         matrix[indexI + 1][indexJ] = +tag.innerText;
-        digits = fromMatrixToArray(matrix);
-        movesCount += 1;
-        movesSpan.innerText = movesCount;
+        necessaryCommonActions();
       }
     });
   }
@@ -410,9 +413,7 @@ function moveCurrentTag(tag) {
         }
         matrix[indexI][indexJ] = 0;
         matrix[indexI][indexJ - 1] = +tag.innerText;
-        digits = fromMatrixToArray(matrix);
-        movesCount += 1;
-        movesSpan.innerText = movesCount;
+        necessaryCommonActions();
       }
     });
   }
@@ -426,9 +427,7 @@ function moveCurrentTag(tag) {
         }
         matrix[indexI][indexJ] = 0;
         matrix[indexI][indexJ + 1] = +tag.innerText;
-        digits = fromMatrixToArray(matrix);
-        movesCount += 1;
-        movesSpan.innerText = movesCount;
+        necessaryCommonActions();
       }
     });
   }
@@ -480,7 +479,6 @@ function moveTagAfterClick(event) {
   const tag = event.target;
   if (tag.classList.contains('tag')) {
     moveCurrentTag(tag);
-    soundOn();
     const timeout = setTimeout(isWinner, 300);
     // isWinner();
   }
@@ -588,6 +586,9 @@ linksWrapper.addEventListener('click', (e) => {
   currentLink.classList.add('active');
   restartTimeAndMoveCounts();
   drawPlayingField();
+  stopBTN.textContent = 'Pause';
+  playingField.addEventListener('click', moveTagAfterClick);
+  playingField.addEventListener('mousedown', moveTagWithMouse);
 });
 
 // restart
@@ -595,6 +596,9 @@ linksWrapper.addEventListener('click', (e) => {
 restartBTN.addEventListener('click', () => {
   restartTimeAndMoveCounts();
   drawPlayingField();
+  stopBTN.textContent = 'Pause';
+  playingField.addEventListener('click', moveTagAfterClick);
+  playingField.addEventListener('mousedown', moveTagWithMouse);
 });
 
 // drag-and-drop
@@ -675,6 +679,9 @@ loadBTN.addEventListener('click', () => {
       item.classList.add('active');
     }
   });
+  stopBTN.textContent = 'Pause';
+  playingField.addEventListener('click', moveTagAfterClick);
+  playingField.addEventListener('mousedown', moveTagWithMouse);
 });
 
 if (localStorage.getItem('array')) {
@@ -742,6 +749,7 @@ resultsBTN.addEventListener('click', () => {
   overlay.classList.add('active');
   removeRowsFromTable();
   addRowWithResult();
+  stopTimer();
 });
 
 overlay.addEventListener('click', () => {
@@ -750,6 +758,9 @@ overlay.addEventListener('click', () => {
     document.querySelector('.finish-popup').remove();
     restartTimeAndMoveCounts();
     drawPlayingField();
+  }
+  if (table.classList.contains('active')) {
+    startTimer();
   }
   table.classList.remove('active');
 });
