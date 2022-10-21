@@ -14,13 +14,15 @@ p {
 .playing-field {
     background: #a17d5d;
     border: 10px solid #72563d;
-    width: 40vw;
-    height: 40vw;
+    width: 80vw;
+    height: 80vw;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     margin-top: 30px;
     border-radius: 5px;
+    max-width: 450px;
+    max-height: 450px;
 }
 
 .tag {
@@ -46,9 +48,13 @@ p {
 .tag.animate-down,
 .tag.animate-up,
 .tag.animate-left,
-.tag.animate-right {
+.tag.animate-right,
+.tag.animate-down-mouse,
+.tag.animate-up-mouse,
+.tag.animate-left-mouse,
+.tag.animate-right-mouse {
     transition-property: transform;
-    transition-duration: 0.3s;
+    transition-duration: 0.25s;
     transition-timing-function: ease;
 }
 
@@ -56,22 +62,42 @@ p {
     transform: translateY(-100%);
 }
 
+.tag.animate-up-mouse {
+    transform: translateY(-1%);
+    transition-duration: 0.1s;
+}
+
 .tag.animate-down {
     transform: translateY(100%);
 }
 
+.tag.animate-down-mouse {
+    transform: translateY(1%);
+    transition-duration: 0.1s;
+}
+
 .tag.animate-left {
-    transform: translateX(-100%);
+    transform: translateX(-100%)
+}
+
+.tag.animate-left-mouse {
+    transform: translateX(-1%);
+    transition-duration: 0.1s;
 }
 
 .tag.animate-right {
     transform: translateX(100%);
 }
 
+.tag.animate-right-mouse {
+    transform: translateX(1%);
+    transition-duration: 0.1s;
+}
+
 .buttons-wrapper {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
     margin-bottom: 10px;
     align-items: center;
 }
@@ -129,4 +155,24 @@ p {
     margin: auto;
     padding: 10%;
     text-align: center;
+}
+
+.links-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 24px;
+    color: #7d5da1;
+}
+
+.links-wrapper a {
+    cursor: pointer;
+}
+
+.links-wrapper a:hover {
+    color: #a6b1ab;
+}
+
+.links-wrapper a.active {
+    text-decoration: underline;
 }
