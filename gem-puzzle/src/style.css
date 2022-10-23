@@ -9,7 +9,8 @@ body {
     margin: 0;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center top;
+    background-position: center center;
+    min-height: 100vh;
 }
 
 p {
@@ -129,6 +130,10 @@ p {
     opacity: 0.3;
 }
 
+.sound-ico.white {
+    background: url('/src/assets/icon/sound-white.svg');
+}
+
 .sound-ico.active {
     opacity: 1;
 }
@@ -139,6 +144,11 @@ p {
     justify-content: center;
     gap: 35px;
     align-items: center;
+    color: #7d5da1;
+}
+
+.info-wrapper.white {
+    color: #e5e5e5;
 }
 
 .info-element {
@@ -177,6 +187,10 @@ p {
     color: #7d5da1;
     flex-wrap: wrap;
     padding: 1rem 2rem;
+}
+
+.links-wrapper.white {
+    color: #e5e5e5;
 }
 
 .links-wrapper a {
@@ -254,6 +268,28 @@ caption {
 
 .overlay.active {
     display: block;
+}
+
+.change-color {
+    background: #e5e5e5;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid #7d5da1;
+}
+
+.change-color:hover {
+    box-shadow: 0px 0px 3px 3px #7d5da1;
+}
+
+.change-color.purple {
+    background: #7d5da1;
+    border: 2px solid #e5e5e5;
+}
+
+.change-color.purple:hover {
+    box-shadow: 0px 0px 3px 3px #e5e5e5;
 }
 
 @media screen and (max-width: 767px) {

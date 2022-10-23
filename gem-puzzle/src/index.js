@@ -4,16 +4,16 @@ import winnerAudio from './assets/sound/winner.mp3';
 import clickAudio from './assets/sound/move.mp3';
 
 async function getBackgroundImg() {
-  const tags = ['nature', 'sea', 'beach', 'leaves', 'art'];
+  const tags = ['nature', 'sea', 'beach', 'leaves', 'art', 'morning', 'travel'];
   const tagNumber = Math.floor(Math.random() * (tags.length - 1));
   const page = Math.floor(Math.random() * 99);
-  const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=7b58093e185fb19b4e9b0386d9735aa6&tags=${tags[tagNumber]}&page=${page}&content_type=1&extras=url_l&format=json&nojsoncallback=1`;
+  const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=7b58093e185fb19b4e9b0386d9735aa6&tags=${tags[tagNumber]}&page=${page}&content_type=1&extras=url_h&format=json&nojsoncallback=1`;
   const res = await fetch(url);
   const data = await res.json();
   const img = new Image();
   const number = Math.floor(Math.random() * 99);
-  if (data.photos.photo[number].url_l) {
-    img.src = `${data.photos.photo[number].url_l}`;
+  if (data.photos.photo[number].url_h) {
+    img.src = `${data.photos.photo[number].url_h}`;
     img.onload = () => {
       document.body.style.backgroundImage = `url('${img.src}')`;
     };
@@ -33,6 +33,10 @@ buttonsWrapper.classList.add('buttons-wrapper');
 const infoWrapper = document.createElement('div');
 document.body.append(infoWrapper);
 infoWrapper.classList.add('info-wrapper');
+
+const changeColorBtn = document.createElement('button');
+changeColorBtn.classList.add('change-color');
+infoWrapper.append(changeColorBtn);
 
 let movesCount = 0;
 let isMouseEvent = false;
@@ -794,4 +798,11 @@ overlay.addEventListener('click', () => {
     startTimer();
   }
   table.classList.remove('active');
+});
+
+changeColorBtn.addEventListener('click', () => {
+  changeColorBtn.classList.toggle('purple');
+  infoWrapper.classList.toggle('white');
+  linksWrapper.classList.toggle('white');
+  soundIco.classList.toggle('white');
 });
