@@ -3,6 +3,25 @@ import './style.css';
 import winnerAudio from './assets/sound/winner.mp3';
 import clickAudio from './assets/sound/move.mp3';
 
+async function getBackgroundImg() {
+  const tags = ['nature', 'sea', 'beach', 'leaves', 'art'];
+  const tagNumber = Math.floor(Math.random() * (tags.length - 1));
+  const page = Math.floor(Math.random() * 99);
+  const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=7b58093e185fb19b4e9b0386d9735aa6&tags=${tags[tagNumber]}&page=${page}&content_type=1&extras=url_l&format=json&nojsoncallback=1`;
+  const res = await fetch(url);
+  const data = await res.json();
+  const img = new Image();
+  const number = Math.floor(Math.random() * 99);
+  if (data.photos.photo[number].url_l) {
+    img.src = `${data.photos.photo[number].url_l}`;
+    img.onload = () => {
+      document.body.style.backgroundImage = `url('${img.src}')`;
+    };
+  } else {
+    getBackgroundImg();
+  }
+}
+
 const overlay = document.createElement('div');
 overlay.classList.add('overlay');
 document.body.append(overlay);
@@ -67,6 +86,10 @@ const buttons = [
     text: 'Results',
     class: 'result',
   },
+  {
+    text: 'Change BG',
+    class: 'change',
+  },
 ];
 
 buttons.forEach((item) => {
@@ -82,6 +105,9 @@ const restartBTN = document.querySelector('.restart');
 const saveBTN = document.querySelector('.save');
 const loadBTN = document.querySelector('.load');
 const resultsBTN = document.querySelector('.result');
+const changeBTN = document.querySelector('.change');
+
+changeBTN.addEventListener('click', getBackgroundImg);
 
 const soundIco = document.createElement('div');
 infoWrapper.append(soundIco);
