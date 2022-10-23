@@ -142,7 +142,7 @@ p {
     padding: 1rem 2rem;
     display: flex;
     justify-content: center;
-    gap: 35px;
+    gap: 3.5rem;
     align-items: center;
     color: #7d5da1;
 }
@@ -304,6 +304,11 @@ caption {
     }
 
     .sound-ico {
+        width: 20px;
+        height: 20px;
+    }
+
+    .change-color {
         width: 20px;
         height: 20px;
     }
